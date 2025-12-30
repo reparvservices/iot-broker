@@ -1,8 +1,8 @@
 import mqtt from "mqtt";
 
 const client = mqtt.connect("mqtt://localhost:1883",{ 
-  username: "backend_user",
-  password: "reparv01",
+  username: process.env.MOSQUITTO_USERNAME,
+  password: process.env.MOSQUITTO_PASSWROD,
 });
 
 client.on("connect", () => {
