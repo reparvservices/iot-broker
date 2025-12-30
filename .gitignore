@@ -1,0 +1,81 @@
+# =========================
+# Node.js dependencies
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# =========================
+# Build output
+# =========================
+dist/
+build/
+out/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Runtime data
+# =========================
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Coverage & test reports
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# Cache directories
+# =========================
+.cache/
+.eslintcache
+
+# =========================
+# OS & Editor files
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# =========================
+# TypeScript (if used)
+# =========================
+*.tsbuildinfo
+
+# =========================
+# Next.js / React (if applicable)
+# =========================
+.next/
+.vercel/
+
+# =========================
+# Firebase / AWS / Cloud
+# =========================
+.firebase/
+.aws/
+
+# =========================
+# PM2
+# =========================
+pm2.log
