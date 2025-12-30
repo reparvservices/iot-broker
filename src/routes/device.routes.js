@@ -1,9 +1,15 @@
 import express from "express";
-import { turnOn, turnOff } from "../controllers/device.controller.js";
+import {
+  controlDevice,
+  getDeviceState
+} from "../controllers/device.controller.js";
 
 const router = express.Router();
 
-router.post("/on", turnOn);
-router.post("/off", turnOff);
+// ONE clean control endpoint
+router.post("/devices/:deviceId/:action", controlDevice);
+
+// Read state
+router.get("/devices/:deviceId", getDeviceState);
 
 export default router;

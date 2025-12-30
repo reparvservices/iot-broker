@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reparv | Smart Home Platform</title>
+
+  <style>
+    :root {
+      --primary: #5e23dc;
+      --success: #1faa59;
+      --danger: #e63946;
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #2b2d42;
+      --muted: #6c757d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 26px;
+      color: var(--primary);
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #dcdcdc;
+      outline: none;
+      margin-bottom: 18px;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    .status-box {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .status-text {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .status-on {
+      color: var(--success);
+    }
+
+    .status-off {
+      color: var(--danger);
+    }
+
+    .controls {
+      display: flex;
+      gap: 14px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-on {
+      background: var(--success);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(31,170,89,0.3);
+    }
+
+    .btn-off {
+      background: var(--danger);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(230,57,70,0.3);
+    }
+
+    .footer {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Reparv Smart Home</h1>
+      <p>Dynamic IoT Device Control</p>
+    </div>
+
+    <div class="card">
+
+      <label for="deviceId">Device ID</label>
+      <input
+        id="deviceId"
+        placeholder="e.g. device1 "
+      />
+
+      <div class="status-box">
+        <div id="status" class="status-text">
+          Enter Device ID
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-on" onclick="controlDevice('on')">
+          TURN ON
+        </button>
+        <button class="btn btn-off" onclick="controlDevice('off')">
+          TURN OFF
+        </button>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      © Reparv Services • MQTT • IoT Platform
+    </div>
+
+  </div>
+
+<script>
+  async function controlDevice(action) {
+    const deviceId = document.getElementById("deviceId").value.trim();
+
+    if (!deviceId) {
+      alert("Please enter Device ID");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/devices/${deviceId}/${action}`, {
+        method: "POST"
+      });
+
+      if (!res.ok) {
+        throw new Error("API error");
+      }
+
+      const data = await res.json();
+
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = "Status: " + data.state;
+
+      statusEl.classList.remove("status-on", "status-off");
+      statusEl.classList.add(
+        data.state === "ON" ? "status-on" : "status-off"
+      );
+    } catch (err) {
+      document.getElementById("status").innerText = "Status: ERROR";
+    }
+  }
+</script>
+
+
+</body>
+</html>
